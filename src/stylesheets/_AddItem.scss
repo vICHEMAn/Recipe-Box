@@ -7,6 +7,7 @@
   z-index: 1;
   position: absolute;
   display: flex;
+  flex-direction: column;
 }
 
 .form-container {
@@ -62,4 +63,7 @@ hr {
 .add-recipe {
   background: $blue;
   cursor: pointer;
+  &:focus {
+    outline: none;
+  }
 }

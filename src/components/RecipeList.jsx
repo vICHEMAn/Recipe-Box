@@ -39,8 +39,9 @@ class RecipeList extends Component {
     this.setState({ toggleAdd: bool });
   }
 
-  submitRecipe(name, ingredients, event) {
+  submitRecipe(event, name, ingredients) {
     event.preventDefault();
+    ingredients.split(' ');
     const stateCopy = this.state.list.slice();
     stateCopy.push(
       {
