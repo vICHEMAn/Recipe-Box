@@ -6,32 +6,10 @@ html {
   background: $bg-color;
 }
 
-.title {
-  color: $darkgrey;
-  font-size: 18px;
-  font-weight: bold;
-  margin-left: 10px;
-}
-
-.title2 {
-  color: $black;
-  font-size: 16px;
-  font-weight: bold;
-  cursor: pointer;
-  &:focus {
-    outline: none;
-  }
-}
-
-.title3 {
-  color: $black;
-  font-size: 12px;
-  font-weight: bold;
-}
-
 .container {
   display: flex;
-  width: 80%;
+  flex-direction: column;
+  width: 350px;
   height: 100vh;
   margin: 0 auto;
 }
@@ -42,4 +20,11 @@ button {
   &:focus {
     outline: none;
   }
+}
+
+.app {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  position: absolute;
 }

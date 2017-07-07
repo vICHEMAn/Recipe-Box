@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 
+import '../stylesheets/_RecipeList.scss';
+
 class RecipeListItem extends Component {
   constructor(props) {
     super(props);
@@ -36,12 +38,18 @@ class RecipeListItem extends Component {
             <p className="title3">INGREDIENTS</p>
             <ul>
               {this.props.recipe.ingredients.map(ingredient => (
-                <li className="title3">{ingredient}</li>
+                <li
+                  className="text-content"
+                  key={ingredient}
+                >{ingredient}</li>
               ))}
             </ul>
           </div>
         </div>
-        <button className={`delete ${this.toggleHide()}`}>Delete</button>
+        <button
+          className={`delete ${this.toggleHide()}`}
+          onClick={() => { this.props.delete(this.props.index); }}
+        >Delete</button>
         <button className={`edit ${this.toggleHide()}`}>Edit</button>
       </li>
     );

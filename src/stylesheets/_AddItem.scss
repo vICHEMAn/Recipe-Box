@@ -1,0 +1,65 @@
+@import './_globals.scss';
+
+.form-background {
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.5);
+  z-index: 1;
+  position: absolute;
+  display: flex;
+}
+
+.form-container {
+  margin: 132.5px auto 0;
+  width: 350px;
+}
+
+.form-body {
+  background: $white;
+  border-radius: 5px;
+  padding: 15px 30px 30px;
+  input {
+    border-radius: 5px;
+    border: 1px solid $lightgrey;
+    width: 100%;
+    padding: 5px 10px;
+    font-family: $main-font;
+    color: $black;
+    font-weight: bold;
+    &:focus {
+      outline: none;
+    }
+  }
+  .title2 {
+    cursor: text;
+  }
+  .title3 {
+    margin: 5px;
+  }
+}
+
+hr {
+  margin: 10px 0 5px;
+  border: 1px solid $lightgrey;
+}
+
+.close, .add-recipe {
+  padding: 5px 10px;
+  margin: 5px 0 0;
+  float: right;
+  border: none;
+  border-radius: 5px;
+  font-size: 12px;
+  font-weight: bold;
+  color: $black;
+  background: $white;
+}
+
+.close {
+  margin: 5px 10px 0 5px;
+}
+
+.add-recipe {
+  background: $blue;
+  cursor: pointer;
+}

@@ -15,3 +15,30 @@ $lightgrey: #EEEEEE;
 $darkgrey: #898989;
 $black: #000;
 $white: #fff;
+
+.hidden {
+  display: none;
+}
+
+.title {
+  color: $darkgrey;
+  font-size: 18px;
+  font-weight: bold;
+  margin-left: 10px;
+}
+
+.title2 {
+  color: $black;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  &:focus {
+    outline: none;
+  }
+}
+
+.title3 {
+  color: $darkgrey;
+  font-size: 12px;
+  font-weight: bold;
+}
