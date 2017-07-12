@@ -37,10 +37,10 @@ class RecipeListItem extends Component {
             <hr />
             <p className="title3">INGREDIENTS</p>
             <ul>
-              {this.props.recipe.ingredients.map(ingredient => (
+              {this.props.recipe.ingredients.map((ingredient, index) => (
                 <li
                   className="text-content"
-                  key={ingredient}
+                  key={index}
                 >{ingredient}</li>
               ))}
             </ul>

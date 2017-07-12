@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import RecipeListItem from './RecipeList_Item';
 import AddItem from './AddItem';
+import EditItem from './EditItem';
 
 import '../stylesheets/_RecipeList.scss';
 
@@ -24,6 +25,7 @@ class RecipeList extends Component {
         },
       ],
       toggleAdd: false,
+      toggleEdit: false,
     };
     this.toggleAddState = this.toggleAddState.bind(this);
     this.toggleHideAdd = this.toggleHideAdd.bind(this);
@@ -39,17 +41,32 @@ class RecipeList extends Component {
     this.setState({ toggleAdd: bool });
   }
 
-  submitRecipe(event, name, ingredients) {
-    event.preventDefault();
-    ingredients.split(' ');
-    const stateCopy = this.state.list.slice();
-    stateCopy.push(
-      {
-        name,
-        ingredients,
-      },
+  toggleHideEdit() {
+    return (this.state.toggleEdit) ? '' : 'hidden';
+  }
+
+  toggleEditState(bool) {
+    this.setState({ toggleEdit: bool });
+  }
+
+  // Edit state: behöver list_item state,
+  // Ladda in Recipe Name och Ingredients i form field.
+  // När man klickar save så updateras det List_Item utan
+  // att ändra ordningen via index.
+
+  submitRecipe(name, ingredients) {
+    if (name !== '' && ingredients !== '') {
+      const ingredientsArray = ingredients.split(' ');
+      const stateCopy = this.state.list.slice();
+      stateCopy.push(
+        {
+          name,
+          ingredients: ingredientsArray,
+        },
     );
-    this.setState({ list: stateCopy });
+      this.setState({ list: stateCopy });
+    }
+    this.toggleAddState(false);
   }
 
   deleteRecipe(index) {
@@ -61,7 +78,7 @@ class RecipeList extends Component {
   listItems() {
     return this.state.list.map((recipe, index) => (
       <RecipeListItem
-        key={recipe.name}
+        key={index}
         recipe={recipe}
         delete={this.deleteRecipe}
         index={index}
@@ -77,13 +94,17 @@ class RecipeList extends Component {
           toggleAddState={this.toggleAddState}
           submitRecipe={this.submitRecipe}
         />
+        {/* <EditItem
+          toggleHideEdit={this.toggleHideEdit}
+          toggleEditState={this.toggleEditState}
+        /> */}
         <div className="container">
           <div className="app-body">
             <div className="top">
               <p className="title">Recipe Box</p>
               <button
                 className="add"
-                onClick={() => this.toggleAddState(true)}
+                onClick={() => this.toggleAddState(true, event)}
               ><p>+</p></button>
             </div>
             <div>

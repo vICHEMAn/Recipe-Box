@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import '../stylesheets/_AddItem.scss';
 
-class AddItem extends Component {
+class EditItem extends Component {
   constructor(props) {
     super(props);
 
@@ -20,19 +20,11 @@ class AddItem extends Component {
     this.setState({ [name]: event.target.value });
   }
 
-  handleSubmit() {
-    this.props.submitRecipe(this.state.recipe, this.state.ingredients);
-    this.setState({
-      recipe: '',
-      ingredients: '',
-    });
-  }
-
   render() {
     return (
       <div
-        className={`form-background ${this.props.toggleHideAdd()}`}
-        onClick={() => this.props.toggleAddState(false)}
+        className={`form-background ${this.props.toggleHideEdit()}`}
+        onClick={() => this.props.toggleEditState(false)}
         role="presentation"
       >
         <div
@@ -42,7 +34,7 @@ class AddItem extends Component {
         >
           <form>
             <div className="form-body">
-              <p className="title2">Add Recipe</p>
+              <p className="title2">Edit Recipe</p>
               <hr />
               <p className="title3">RECIPE</p>
               <input
@@ -62,14 +54,13 @@ class AddItem extends Component {
             <button
               type="button"
               className="close"
-              onClick={() => this.props.toggleAddState(false)}
+              onClick={() => this.props.toggleEditState(false)}
             >Close</button>
             <input
               type="button"
-              value="Add"
+              value="Save Edit"
               className="add-recipe"
-              onClick={
-                () => this.handleSubmit()}
+              onClick={() => this.handleSubmit()}
             />
           </form>
         </div>
@@ -78,4 +69,4 @@ class AddItem extends Component {
   }
 }
 
-export default AddItem;
+export default EditItem;
