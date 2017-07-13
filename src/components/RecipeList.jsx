@@ -37,6 +37,16 @@ class RecipeList extends Component {
     this.deleteRecipe = this.deleteRecipe.bind(this);
   }
 
+  componentWillMount() {
+    const data = localStorage.getItem('recipes');
+    const recipes = JSON.parse(data);
+    if (recipes) {
+      this.setState({
+        list: recipes,
+      });
+    }
+  }
+
   /* ===========================
    Add functions
    =========================== */
@@ -60,6 +70,7 @@ class RecipeList extends Component {
         },
     );
       this.setState({ list: stateCopy });
+      this.saveToLocal(stateCopy);
     }
     this.toggleAddState(false);
   }
@@ -86,16 +97,23 @@ class RecipeList extends Component {
       list: stateCopy,
       toggleEdit: false,
     });
+    this.saveToLocal(stateCopy);
   }
 
   /* ===========================
    List item functions
    =========================== */
 
+  saveToLocal(state) {
+    const data = JSON.stringify(state);
+    localStorage.setItem('recipes', data);
+  }
+
   deleteRecipe(index) {
     const stateCopy = this.state.list.slice();
     stateCopy.splice(index, 1);
     this.setState({ list: stateCopy });
+    this.saveToLocal(stateCopy);
   }
 
   listItems() {
