@@ -26,12 +26,20 @@ class RecipeList extends Component {
       ],
       toggleAdd: false,
       toggleEdit: false,
+      editIndex: null,
     };
     this.toggleAddState = this.toggleAddState.bind(this);
     this.toggleHideAdd = this.toggleHideAdd.bind(this);
+    this.toggleHideEdit = this.toggleHideEdit.bind(this);
+    this.toggleEditState = this.toggleEditState.bind(this);
+    this.editRecipe = this.editRecipe.bind(this);
     this.submitRecipe = this.submitRecipe.bind(this);
     this.deleteRecipe = this.deleteRecipe.bind(this);
   }
+
+  /* ===========================
+   Add functions
+   =========================== */
 
   toggleHideAdd() {
     return (this.state.toggleAdd) ? '' : 'hidden';
@@ -41,22 +49,9 @@ class RecipeList extends Component {
     this.setState({ toggleAdd: bool });
   }
 
-  toggleHideEdit() {
-    return (this.state.toggleEdit) ? '' : 'hidden';
-  }
-
-  toggleEditState(bool) {
-    this.setState({ toggleEdit: bool });
-  }
-
-  // Edit state: behöver list_item state,
-  // Ladda in Recipe Name och Ingredients i form field.
-  // När man klickar save så updateras det List_Item utan
-  // att ändra ordningen via index.
-
   submitRecipe(name, ingredients) {
     if (name !== '' && ingredients !== '') {
-      const ingredientsArray = ingredients.split(' ');
+      const ingredientsArray = ingredients.split(', ');
       const stateCopy = this.state.list.slice();
       stateCopy.push(
         {
@@ -68,6 +63,34 @@ class RecipeList extends Component {
     }
     this.toggleAddState(false);
   }
+
+  /* ===========================
+   Edit functions
+   =========================== */
+
+  toggleHideEdit() {
+    return (this.state.toggleEdit) ? '' : 'hidden';
+  }
+
+  toggleEditState(bool, index) {
+    this.setState({
+      toggleEdit: bool,
+      editIndex: index });
+  }
+
+  editRecipe(index, recipe) {
+    const stateCopy = this.state.list.slice();
+    stateCopy.splice(index, 1);
+    stateCopy.splice(index, 0, recipe);
+    this.setState({
+      list: stateCopy,
+      toggleEdit: false,
+    });
+  }
+
+  /* ===========================
+   List item functions
+   =========================== */
 
   deleteRecipe(index) {
     const stateCopy = this.state.list.slice();
@@ -81,9 +104,24 @@ class RecipeList extends Component {
         key={index}
         recipe={recipe}
         delete={this.deleteRecipe}
+        toggleEditState={this.toggleEditState}
         index={index}
       />
     ));
+  }
+
+  editItem() {
+    if (this.state.toggleEdit) {
+      return (
+        <EditItem
+          toggleHideEdit={this.toggleHideEdit}
+          toggleEditState={this.toggleEditState}
+          editRecipe={this.editRecipe}
+          index={this.state.editIndex}
+          recipe={this.state.list[this.state.editIndex]}
+        />
+      );
+    }
   }
 
   render() {
@@ -94,10 +132,7 @@ class RecipeList extends Component {
           toggleAddState={this.toggleAddState}
           submitRecipe={this.submitRecipe}
         />
-        {/* <EditItem
-          toggleHideEdit={this.toggleHideEdit}
-          toggleEditState={this.toggleEditState}
-        /> */}
+        {this.editItem()}
         <div className="container">
           <div className="app-body">
             <div className="top">

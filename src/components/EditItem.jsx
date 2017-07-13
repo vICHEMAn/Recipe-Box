@@ -7,10 +7,17 @@ class EditItem extends Component {
     super(props);
 
     this.state = {
-      recipe: '',
+      name: '',
       ingredients: '',
     };
     this.handleChange = this.handleChange.bind(this);
+  }
+
+  componentWillMount() {
+    this.setState({
+      name: this.props.recipe.name,
+      ingredients: this.props.recipe.ingredients.join(', '),
+    });
   }
 
   handleChange(event) {
@@ -20,11 +27,21 @@ class EditItem extends Component {
     this.setState({ [name]: event.target.value });
   }
 
+  sendEdit() {
+    if (this.state.recipe !== '' && this.state.ingredients !== '') {
+      const ingredientsArray = this.state.ingredients.split(', ');
+      return {
+        name: this.state.name,
+        ingredients: ingredientsArray,
+      };
+    }
+  }
+
   render() {
     return (
       <div
         className={`form-background ${this.props.toggleHideEdit()}`}
-        onClick={() => this.props.toggleEditState(false)}
+        onClick={() => this.props.toggleEditState(false, '')}
         role="presentation"
       >
         <div
@@ -39,8 +56,8 @@ class EditItem extends Component {
               <p className="title3">RECIPE</p>
               <input
                 type="text"
-                name="recipe"
-                value={this.state.recipe}
+                name="name"
+                value={this.state.name}
                 onChange={this.handleChange}
               />
               <p className="title3">INGREDIENTS</p>
@@ -54,13 +71,16 @@ class EditItem extends Component {
             <button
               type="button"
               className="close"
-              onClick={() => this.props.toggleEditState(false)}
+              onClick={() => this.props.toggleEditState(false, '')}
             >Close</button>
             <input
               type="button"
               value="Save Edit"
               className="add-recipe"
-              onClick={() => this.handleSubmit()}
+              onClick={() => this.props.editRecipe(
+                this.props.index,
+                this.sendEdit(),
+              )}
             />
           </form>
         </div>

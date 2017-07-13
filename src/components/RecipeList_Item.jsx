@@ -50,7 +50,10 @@ class RecipeListItem extends Component {
           className={`delete ${this.toggleHide()}`}
           onClick={() => { this.props.delete(this.props.index); }}
         >Delete</button>
-        <button className={`edit ${this.toggleHide()}`}>Edit</button>
+        <button
+          className={`edit ${this.toggleHide()}`}
+          onClick={() => this.props.toggleEditState(true, this.props.index)}
+        >Edit</button>
       </li>
     );
   }
